@@ -1,6 +1,15 @@
+import 'zone.js'; 
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+import { App } from './app/app';
+import { articleReducer } from './app/state/articles.reducer';
+import { ArticlesEffects } from './app/state/articles.effects';
+
+bootstrapApplication(App, {
+  providers: [
+    provideStore({ articles: articleReducer }),
+    provideEffects([ArticlesEffects])
+  ]
+});
